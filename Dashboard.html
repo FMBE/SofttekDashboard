@@ -5,10 +5,88 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="js/app.js"> </script>
+    <style>
+      tr [colspan="2"] {
+        text-align: center;
+        color: #3c71dd;
+      }
+      #radar{
+        top:50%;
+        left:50%;
+        position: absolute;
+        transform:translate(-50%, -50%);
+        z-index: -1;
+      }
+      #buttonTypes{
+        margin-top: 80px;
+        margin-left: 40px;
+        background-color: #e6eeff;
+        border-radius: 10px;
+        width: 200px;
+      }
+      #buttonTypes .first{
+        padding-top: 8px;
+      }
+      #buttonTypes .last{
+        padding-bottom: 8px;
+      }
+      #buttonTypes td{
+        padding-top: 1px;
+        padding-bottom: 1px;
+        padding-left: 20px;
+        color: #3c71dd;
+      }
+      #buttonTypes th{
+        border-bottom:3pt solid white;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+      #softtekImage{
+        margin-left: 50px;
+        margin-top: 80px;
+        max-height: 150px;
+        max-width: 150px;
+      }
+      .improve
+      {
+        width:20px;
+        height:20px;
+        border:2px solid white;
+        border-radius:50px;
+        box-shadow:0.5px 0.5px 1px #000;
+        background:green;opacity:0.95
+      }
+      .generate
+      {
+        width:20px;
+        height:20px;
+        border:2px solid white;
+        border-radius:50px;
+        box-shadow:0.5px 0.5px 1px #000;
+        background:orange;opacity:0.95
+      }
+      .disrupt
+      {
+        width:20px;
+        height:20px;
+        border:2px solid white;
+        border-radius:50px;
+        box-shadow:0.5px 0.5px 1px #000;
+        background:red;opacity:0.95
+      }
+      .mainstream
+      {
+        width:20px;
+        height:20px;
+        border:2px solid white;
+        border-radius:50px;
+        box-shadow:0.5px 0.5px 1px #000;
+        background:white;opacity:0.95
+      }
+    </style>
   </head>
   <body>
-    <nav class="navbar navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">Softtek Innovation Dashboard</a>
@@ -18,85 +96,46 @@
         </ul>
       </div>
     </nav>
-    <svg width="1600" height="1600">
-  <!--<circle cx="50" cy="50" r="50" />-->
-  <path d="M0,400 a1,1 0 0,1 800,0" fill="blue" />
-  <path d="M100,400 a1,1 0 0,1 600,0" fill="cyan" />
-  <path d="M200,400 a1,1 0 0,1 400,0" fill="white" />
-  <path d="M300,400 a1,1 0 0,1 200,0" fill="black" />
-  <line x1="400" y1="400" x2="100" y2="100" style="stroke:rgb(255,0,0);stroke-width:2" />
-  <line x1="400" y1="400" x2="700" y2="100" style="stroke:rgb(255,0,0);stroke-width:2" />
-  <line x1="400" y1="400" x2="400" y2="0" style="stroke:rgb(255,0,0);stroke-width:2" />
-</svg>
-    <canvas id="myCanvas" width="1280" height="1024"></canvas>
-    <style>
-    .improve
-    {
-      position: absolute;
-      display:block;
-      width:20px;
-      height:20px;
-      border:2px solid white;
-      border-radius:50px;
-      line-height:100px;
-      box-shadow:0.5px 0.5px 1px #000;
-      background:green;opacity:0.95
-    }
-    .improve:hover
-    {
-      box-shadow:0 0 4px #222 inset;
-      opacity:1
-    }
-    .generate
-    {
-      position: absolute;
-      display:block;
-      width:20px;
-      height:20px;
-      border:2px solid white;
-      border-radius:50px;
-      line-height:100px;
-      box-shadow:0.5px 0.5px 1px #000;
-      background:orange;opacity:0.95
-    }
-    .generate:hover
-    {
-      box-shadow:0 0 4px #222 inset;
-      opacity:1
-    }
-    .disrupt
-    {
-      position: absolute;
-      display:block;
-      width:20px;
-      height:20px;
-      border:2px solid white;
-      border-radius:50px;
-      line-height:100px;
-      box-shadow:0.5px 0.5px 1px #000;
-      background:red;opacity:0.95
-    }
-    .disrupt:hover
-    {
-      box-shadow:0 0 4px #222 inset;
-      opacity:1
-    }
-    .mainstream
-    {
-      position: absolute;
-      display:block;
-      width:20px;
-      height:20px;
-      border:2px solid white;
-      border-radius:50px;
-      line-height:100px;
-      box-shadow:0.5px 0.5px 1px #000;
-      background:white;opacity:0.95
-    }
-    .mainstream:hover
-    {
-      box-shadow:0 0 4px #222 inset;
-      opacity:1
-    }
+    <div class="row">
+      <div class="col-lg-9 col-md-9 col-sm-9">
+        <img id="softtekImage" src="assets/images/softtek.png">
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3">
+        <table id="buttonTypes">
+          <tr>
+            <th colspan="2" align="center">Innovation Ecosystem</th>
+          </tr>
+          <tr>
+            <td align="left" class="first"><button class="mainstream" disabled> </button></td>
+            <td align="left" class="first">Mainstream</td>
+          </tr>
+          <tr>
+            <td align="left"><button class="improve" disabled> </button></td>
+            <td align="left">Improve</td>
+          </tr>
+          <tr>
+            <td align="left"><button class="generate" disabled> </button></td>
+            <td align="left">Generate</td>
+          </tr>
+          <tr>
+            <td align="left" class="last"><button class="disrupt" disabled></button></td>
+            <td align="left" class="last">Disrupt</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- stroke="#6699ff" stroke-width="2"-->
+    <div>
+      <svg width="1200" height="600" id="radar">
+        <path d="M0,600 a1,1 0 0,1 1200,0" fill="#e6eeff" stroke="#ccddff" stroke-width="2"/>
+        <path d="M100,600 a1,1 0 0,1 1000,0" fill="#ccddff"/>
+        <path d="M200,600 a1,1 0 0,1 800,0" fill="#b3ccff"/>
+        <path d="M300,600 a1,1 0 0,1 600,0" fill="#99bbff"/>
+        <path d="M400,600 a1,1 0 0,1 400,0" fill="#80aaff"/>
+        <line x1="600" y1="605" x2="100" y2="100" style="stroke:white;stroke-width:7" />
+        <line x1="600" y1="605" x2="1100" y2="100" style="stroke:white;stroke-width:7" />
+        <line x1="600" y1="605" x2="600" y2="0" style="stroke:white;stroke-width:7" />
+      </svg>
+    </div>
   </body>
 </html>
