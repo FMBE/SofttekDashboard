@@ -5,13 +5,22 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+
     <style>
       tr [colspan="2"] {
         text-align: center;
-        color: #3c71dd;
+      }
+      .buisnessImpactLabel{
+        font-size: 35px;
+        stroke: #ccddff;
+        fill: #ccddff;
+      }
+      .timeLabel{
+        fill: #80aaff;
       }
       #radar{
-        top:50%;
+        top:57%;
         left:50%;
         position: absolute;
         transform:translate(-50%, -50%);
@@ -53,7 +62,6 @@
         height:20px;
         border:2px solid white;
         border-radius:50px;
-        box-shadow:0.5px 0.5px 1px #000;
         background:green;opacity:0.95
       }
       .generate
@@ -62,7 +70,6 @@
         height:20px;
         border:2px solid white;
         border-radius:50px;
-        box-shadow:0.5px 0.5px 1px #000;
         background:orange;opacity:0.95
       }
       .disrupt
@@ -71,7 +78,6 @@
         height:20px;
         border:2px solid white;
         border-radius:50px;
-        box-shadow:0.5px 0.5px 1px #000;
         background:red;opacity:0.95
       }
       .mainstream
@@ -80,7 +86,6 @@
         height:20px;
         border:2px solid white;
         border-radius:50px;
-        box-shadow:0.5px 0.5px 1px #000;
         background:white;opacity:0.95
       }
     </style>
@@ -126,15 +131,34 @@
     </div>
     <!-- stroke="#6699ff" stroke-width="2"-->
     <div>
-      <svg width="1200" height="600" id="radar">
+      <svg width="1200" height="650" id="radar">
         <path d="M0,600 a1,1 0 0,1 1200,0" fill="#e6eeff" stroke="#ccddff" stroke-width="2"/>
-        <path d="M100,600 a1,1 0 0,1 1000,0" fill="#ccddff"/>
-        <path d="M200,600 a1,1 0 0,1 800,0" fill="#b3ccff"/>
-        <path d="M300,600 a1,1 0 0,1 600,0" fill="#99bbff"/>
-        <path d="M400,600 a1,1 0 0,1 400,0" fill="#80aaff"/>
+        <path id="tophalf" d="M100,600 a1,1 0 0,1 1000,0" fill="#ccddff" stroke="#ccddff" stroke-width="2"/>
+        <path d="M200,600 a1,1 0 0,1 800,0" fill="#b3ccff" stroke="#ccddff" stroke-width="2"/>
+        <path d="M300,600 a1,1 0 0,1 600,0" fill="#99bbff" stroke="#ccddff" stroke-width="2"/>
+        <path d="M400,600 a1,1 0 0,1 400,0" fill="#80aaff" stroke="#ccddff" stroke-width="2"/>
         <line x1="600" y1="605" x2="100" y2="100" style="stroke:white;stroke-width:7" />
         <line x1="600" y1="605" x2="1100" y2="100" style="stroke:white;stroke-width:7" />
         <line x1="600" y1="605" x2="600" y2="0" style="stroke:white;stroke-width:7" />
+
+        <text x="0" y="0" class="buisnessImpactLabel" text-anchor="middle">
+          <textPath xlink:href="#tophalf" startOffset="12%">LOW</textPath>
+        </text>
+        <text x="0" y="0" class="buisnessImpactLabel" text-anchor="middle">
+          <textPath xlink:href="#tophalf" startOffset="37%">MEDIUM</textPath>
+        </text>
+        <text x="0" y="0" class="buisnessImpactLabel" text-anchor="middle">
+          <textPath xlink:href="#tophalf" startOffset="62%">HIGH</textPath>
+        </text>
+        <text x="0" y="0" class="buisnessImpactLabel" text-anchor="middle">
+          <textPath xlink:href="#tophalf" startOffset="88%">TRANSFORMATIONAL</textPath>
+        </text>
+
+        <text x="13" y="625" font-size="22" class="timeLabel">4 Years</text>
+        <text x="113" y="625" font-size="22" class="timeLabel">3 Years</text>
+        <text x="213" y="625" font-size="22" class="timeLabel">2 Years</text>
+        <text x="315" y="625" font-size="22" class="timeLabel">1 Year</text>
+        <text x="462" y="625" font-size="22" class="timeLabel">Now</text>
       </svg>
     </div>
   </body>
