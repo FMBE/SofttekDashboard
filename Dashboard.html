@@ -6,7 +6,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
-
     <style>
       tr [colspan="2"] {
         text-align: center;
@@ -19,11 +18,12 @@
       .timeLabel{
         fill: #80aaff;
       }
+      #radar-container{
+        position:relative; width:90%; height:100%;
+        margin:0 auto
+      }
       #radar{
-        top:57%;
-        left:50%;
         position: absolute;
-        transform:translate(-50%, -50%);
         z-index: -1;
       }
       #buttonTypes{
@@ -51,10 +51,10 @@
         padding-bottom: 5px;
       }
       #softtekImage{
-        margin-left: 50px;
+        margin-left: 60px;
         margin-top: 80px;
-        max-height: 150px;
-        max-width: 150px;
+        max-height: 200px;
+        max-width: 200px;
       }
       .improve
       {
@@ -64,6 +64,11 @@
         border-radius:50px;
         background:green;opacity:0.95
       }
+      .improve:hover
+      {
+        box-shadow:0 0 4px #222 inset;
+        opacity:1
+      }
       .generate
       {
         width:20px;
@@ -71,6 +76,11 @@
         border:2px solid white;
         border-radius:50px;
         background:orange;opacity:0.95
+      }
+      .generate:hover
+      {
+        box-shadow:0 0 4px #222 inset;
+        opacity:1
       }
       .disrupt
       {
@@ -80,6 +90,11 @@
         border-radius:50px;
         background:red;opacity:0.95
       }
+      .disrupt:hover
+      {
+        box-shadow:0 0 4px #222 inset;
+        opacity:1
+      }
       .mainstream
       {
         width:20px;
@@ -87,6 +102,29 @@
         border:2px solid white;
         border-radius:50px;
         background:white;opacity:0.95
+      }
+      .mainstream:hover
+      {
+        box-shadow:0 0 4px #222 inset;
+        opacity:1
+      }
+      .search-bar{
+        margin-top: 85px;
+        position: relative;
+        display: table;
+        border-collapse: separate;
+      }
+      .stylish-input-group .input-group-addon{
+        background: white !important;
+      }
+      .stylish-input-group .form-control{
+	       border-right:0;
+	       box-shadow:0 0 0;
+	       border-color:#ccc;
+      }
+      .stylish-input-group button{
+        border:0;
+        background:transparent;
       }
     </style>
   </head>
@@ -102,8 +140,18 @@
       </div>
     </nav>
     <div class="row">
-      <div class="col-lg-9 col-md-9 col-sm-9">
+      <div class="col-lg-3 col-md-3 col-sm-3">
         <img id="softtekImage" src="assets/images/softtek.png">
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="search-bar stylish-input-group">
+          <input type="text" class="form-control"  placeholder="Search" >
+          <span class="input-group-addon">
+            <button type="submit">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </span>
+        </div>
       </div>
       <div class="col-lg-3 col-md-3 col-sm-3">
         <table id="buttonTypes">
@@ -129,14 +177,13 @@
         </table>
       </div>
     </div>
-    <!-- stroke="#6699ff" stroke-width="2"-->
-    <div>
-      <svg width="1200" height="650" id="radar">
-        <path d="M0,600 a1,1 0 0,1 1200,0" fill="#e6eeff" stroke="#ccddff" stroke-width="2"/>
-        <path id="tophalf" d="M100,600 a1,1 0 0,1 1000,0" fill="#ccddff" stroke="#ccddff" stroke-width="2"/>
-        <path d="M200,600 a1,1 0 0,1 800,0" fill="#b3ccff" stroke="#ccddff" stroke-width="2"/>
-        <path d="M300,600 a1,1 0 0,1 600,0" fill="#99bbff" stroke="#ccddff" stroke-width="2"/>
-        <path d="M400,600 a1,1 0 0,1 400,0" fill="#80aaff" stroke="#ccddff" stroke-width="2"/>
+    <div id="radar-container">
+      <svg viewbox="0 0 1200 650" id="radar">
+        <path d="M0,600 a1,1 0 0,1 1200,0" fill="#e6eeff" stroke="#ccddff" stroke-width="3"/>
+        <path id="tophalf" d="M100,600 a1,1 0 0,1 1000,0" fill="#ccddff" stroke="#ccddff" stroke-width="3"/>
+        <path d="M200,600 a1,1 0 0,1 800,0" fill="#b3ccff" stroke="#ccddff" stroke-width="3"/>
+        <path d="M300,600 a1,1 0 0,1 600,0" fill="#99bbff" stroke="#ccddff" stroke-width="3"/>
+        <path d="M400,600 a1,1 0 0,1 400,0" fill="#80aaff" stroke="#ccddff" stroke-width="3"/>
         <line x1="600" y1="605" x2="100" y2="100" style="stroke:white;stroke-width:7" />
         <line x1="600" y1="605" x2="1100" y2="100" style="stroke:white;stroke-width:7" />
         <line x1="600" y1="605" x2="600" y2="0" style="stroke:white;stroke-width:7" />
@@ -161,5 +208,150 @@
         <text x="462" y="625" font-size="22" class="timeLabel">Now</text>
       </svg>
     </div>
+    <script>
+    var radarWidth = document.getElementById('radar-container').offsetWidth;
+    var coordinateX;
+    var coordinateY;
+    var i;
+    var $testButton;
+    var degree=5;
+    var buttonClass;
+    radarWidth = radarWidth - 40;
+    for(i=0; i<35; i++)
+    {
+      coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
+      coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
+      if(degree!==45&&degree!==90&&degree!==135){
+        $testButton = $('<button/>').attr({
+          class: 'improve',
+          style: 'left:' + (coordinateX + (radarWidth/2)+10) + 'px;top:' + (coordinateY + (radarWidth/2)+20) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      }
+      degree=degree+5;
+    }
+    //Estos son lineas de prueba
+    degree = 5;
+    radarWidth = document.getElementById('radar-container').offsetWidth;
+    radarWidth = radarWidth - 120;
+    for(i=0; i<35; i++)
+    {
+      coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
+      coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
+      if(degree!==45&&degree!==90&&degree!==135){
+        $testButton = $('<button/>').attr({
+          class: 'generate',
+          style: 'left:' + (coordinateX + (radarWidth/2)+50) + 'px;top:' + (coordinateY + (radarWidth/2)+60) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      }
+      degree=degree+5;
+    }
+    degree = 5;
+    radarWidth = document.getElementById('radar-container').offsetWidth;
+    radarWidth = radarWidth - 240;
+    for(i=0; i<35; i++)
+    {
+      coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
+      coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
+      if(degree!==45&&degree!==90&&degree!==135){
+        $testButton = $('<button/>').attr({
+          class: 'disrupt',
+          style: 'left:' + (coordinateX + (radarWidth/2)+110) + 'px;top:' + (coordinateY + (radarWidth/2)+120) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      }
+      degree=degree+5;
+    }
+    degree = 5;
+    radarWidth = document.getElementById('radar-container').offsetWidth;
+    radarWidth = radarWidth - 320;
+    for(i=0; i<35; i++)
+    {
+      coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
+      coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
+      if(degree!==45&&degree!==90&&degree!==135){
+        $testButton = $('<button/>').attr({
+          class: 'mainstream',
+          style: 'left:' + (coordinateX + (radarWidth/2)+150) + 'px;top:' + (coordinateY + (radarWidth/2)+160) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      }
+      degree=degree+5;
+    }
+    degree = 5;
+    radarWidth = document.getElementById('radar-container').offsetWidth;
+    radarWidth = radarWidth - 440;
+    for(i=0; i<35; i++)
+    {
+      coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
+      coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
+      if(degree!==45&&degree!==90&&degree!==135){
+        $testButton = $('<button/>').attr({
+          class: 'improve',
+          style: 'left:' + (coordinateX + (radarWidth/2)+210) + 'px;top:' + (coordinateY + (radarWidth/2)+210) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      }
+      degree=degree+5;
+    }
+    degree = 6;
+    radarWidth = document.getElementById('radar-container').offsetWidth;
+    radarWidth = radarWidth - 520;
+    for(i=0; i<21; i++)
+    {
+      if(i==5)degree = 51;
+      if(i==11)degree = 96;
+      if(i==16)degree = 141;
+      coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
+      coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
+      if(i!==10){
+        $testButton = $('<button/>').attr({
+          class: 'generate',
+          style: 'left:' + (coordinateX + (radarWidth/2)+250) + 'px;top:' + (coordinateY + (radarWidth/2)+250) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      }
+      degree=degree+8.2;
+    }
+    degree = 6;
+    radarWidth = document.getElementById('radar-container').offsetWidth;
+    radarWidth = radarWidth - 640;
+    for(i=0; i<21; i++)
+    {
+      if(i==5)degree = 51;
+      if(i==11)degree = 96;
+      if(i==16)degree = 141;
+      coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
+      coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
+      if(i!==10){
+        $testButton = $('<button/>').attr({
+          class: 'mainstream',
+          style: 'left:' + (coordinateX + (radarWidth/2)+310) + 'px;top:' + (coordinateY + (radarWidth/2)+310) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      }
+      degree=degree+8.2;
+    }
+    degree = 6;
+    radarWidth = document.getElementById('radar-container').offsetWidth;
+    radarWidth = radarWidth - 720;
+    for(i=0; i<21; i++)
+    {
+      if(i==5)degree = 51;
+      if(i==11)degree = 96;
+      if(i==16)degree = 141;
+      coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
+      coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
+      if(i!==10){
+        $testButton = $('<button/>').attr({
+          class: 'improve',
+          style: 'left:' + (coordinateX + (radarWidth/2)+350) + 'px;top:' + (coordinateY + (radarWidth/2)+350) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      }
+      degree=degree+8.2;
+    }
+    </script>
   </body>
 </html>

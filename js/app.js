@@ -5,6 +5,8 @@
   ]
 
   var r;
+  var radarHeight = document.getElementById('radar-container').offset;
+  alert(radarHeight);
 
   /*x=r*cos(degree)
   y=r*cos(degree)*/
@@ -33,7 +35,6 @@
       }
       coordinateX = r*Math.cos(5 * Math.PI/180);
       coordinateY = r*Math.sin(5 * Math.PI/180);
-
     }
   }
 });
