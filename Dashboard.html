@@ -11,7 +11,7 @@
         text-align: center;
       }
       .buisnessImpactLabel{
-        font-size: 35px;
+        font-size: 30px;
         stroke: #ccddff;
         fill: #ccddff;
       }
@@ -209,13 +209,16 @@
       </svg>
     </div>
     <script>
+      var technologies = [
+        {technologyName: "AngularJS", buisnessImpact: "low", timeImpact: "3", technologyType: "generate", author: "Fausto Murillo"},
+        {technologyName: "EmberJS", buisnessImpact: "medium", timeImpact: "0", technologyType: "improve", author: "Carlos Murillo"}
+      ]
     var radarWidth = document.getElementById('radar-container').offsetWidth;
     var coordinateX;
     var coordinateY;
     var i;
     var $testButton;
     var degree=5;
-    var buttonClass;
     radarWidth = radarWidth - 40;
     for(i=0; i<35; i++)
     {
@@ -233,7 +236,7 @@
     //Estos son lineas de prueba
     degree = 5;
     radarWidth = document.getElementById('radar-container').offsetWidth;
-    radarWidth = radarWidth - 120;
+    radarWidth = radarWidth - 110;
     for(i=0; i<35; i++)
     {
       coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
@@ -241,7 +244,7 @@
       if(degree!==45&&degree!==90&&degree!==135){
         $testButton = $('<button/>').attr({
           class: 'generate',
-          style: 'left:' + (coordinateX + (radarWidth/2)+50) + 'px;top:' + (coordinateY + (radarWidth/2)+60) + 'px;position: absolute;'
+          style: 'left:' + (coordinateX + (radarWidth/2)+45) + 'px;top:' + (coordinateY + (radarWidth/2)+55) + 'px;position: absolute;'
         });
         $('#radar-container').append($testButton);
       }
@@ -351,6 +354,21 @@
         $('#radar-container').append($testButton);
       }
       degree=degree+8.2;
+    }
+
+    degree = 6;
+    radarWidth = document.getElementById('radar-container').offsetWidth;
+    radarWidth = radarWidth - 820;
+    for(i=0; i<18; i++)
+    {
+      coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
+      coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
+        $testButton = $('<button/>').attr({
+          class: 'generate',
+          style: 'left:' + (coordinateX + (radarWidth/2)+400) + 'px;top:' + (coordinateY + (radarWidth/2)+400) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      degree=degree+10;
     }
     </script>
   </body>
