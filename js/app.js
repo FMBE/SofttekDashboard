@@ -1,4 +1,3 @@
-
 var technologies = [
   {technologyName: "AngularJS", buisnessImpact: "low", timeImpact: "3", technologyType: "generate", author: "Fausto Murillo"},
   {technologyName: "EmberJS", buisnessImpact: "medium", timeImpact: "0", technologyType: "improve", author: "Carlos Murillo"}

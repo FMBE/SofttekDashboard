@@ -206,13 +206,29 @@
         <text x="213" y="625" font-size="22" class="timeLabel">2 Years</text>
         <text x="315" y="625" font-size="22" class="timeLabel">1 Year</text>
         <text x="462" y="625" font-size="22" class="timeLabel">Now</text>
+
+        <text x="1115" y="625" font-size="22" class="timeLabel">4 Years</text>
+        <text x="1015" y="625" font-size="22" class="timeLabel">3 Years</text>
+        <text x="915" y="625" font-size="22" class="timeLabel">2 Years</text>
+        <text x="815" y="625" font-size="22" class="timeLabel">1 Year</text>
+        <text x="683" y="625" font-size="22" class="timeLabel">Now</text>
       </svg>
     </div>
     <script>
-      var technologies = [
-        {technologyName: "AngularJS", buisnessImpact: "low", timeImpact: "3", technologyType: "generate", author: "Fausto Murillo"},
-        {technologyName: "EmberJS", buisnessImpact: "medium", timeImpact: "0", technologyType: "improve", author: "Carlos Murillo"}
-      ]
+    var technologies = [
+      {technologyName: "AngularJS", buisnessImpact: "1", timeImpact: "3", technologyType: "generate", author: "Fausto Murillo"},
+      {technologyName: "EmberJS", buisnessImpact: "2", timeImpact: "0", technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "EmberJS", buisnessImpact: "4", timeImpact: "2", technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "EmberJS", buisnessImpact: "1", timeImpact: "4", technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "EmberJS", buisnessImpact: "2", timeImpact: "0", technologyType: "improve", author: "Carlos Murillo"}
+    ]
+    technologies.sort(function(a,b){
+     return a.buisnessImpact - b.buisnessImpact;
+    });
+    console.log(technologies);
+    function organizeTechnologies(technologies){
+
+    }
     var radarWidth = document.getElementById('radar-container').offsetWidth;
     var coordinateX;
     var coordinateY;
