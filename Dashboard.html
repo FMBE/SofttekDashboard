@@ -215,23 +215,66 @@
       </svg>
     </div>
     <script>
-    var technologies = [
-      {technologyName: "AngularJS", buisnessImpact: "1", timeImpact: "3", technologyType: "generate", author: "Fausto Murillo"},
-      {technologyName: "EmberJS", buisnessImpact: "2", timeImpact: "0", technologyType: "improve", author: "Carlos Murillo"},
-      {technologyName: "EmberJS", buisnessImpact: "4", timeImpact: "2", technologyType: "improve", author: "Carlos Murillo"},
-      {technologyName: "EmberJS", buisnessImpact: "1", timeImpact: "4", technologyType: "improve", author: "Carlos Murillo"},
-      {technologyName: "EmberJS", buisnessImpact: "2", timeImpact: "0", technologyType: "improve", author: "Carlos Murillo"}
-    ]
-    technologies.sort(function(a,b){
-     return a.buisnessImpact - b.buisnessImpact;
-    });
-    console.log(technologies);
-    function organizeTechnologies(technologies){
-
-    }
     var radarWidth = document.getElementById('radar-container').offsetWidth;
     var coordinateX;
     var coordinateY;
+    var degree;
+    var technologies = [
+      {technologyName: "AngularJS", buisnessImpact: "1", timeImpact: "3", technologyType: "generate", author: "Fausto Murillo"},
+      {technologyName: "EmberJS", buisnessImpact: "2", timeImpact: "0", technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "BackboneJS", buisnessImpact: "4", timeImpact: "2", technologyType: "mainstream", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: "1", timeImpact: "4", technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "Foundation", buisnessImpact: "2", timeImpact: "0", technologyType: "disrupt", author: "Carlos Murillo"}
+    ];
+    var technologiesLow = [];
+    var technologiesMid = [];
+    var technologiesHigh = [];
+    var technologiesTrans = [];
+    /*technologies.sort(function(a,b){
+     return a.buisnessImpact - b.buisnessImpact;
+   });*/
+    console.log(technologies);
+    function organizeTechnologies(technologies){
+      var i;
+      for(i=0;i<technologies.length;i++)
+      {
+        switch(technologies[i].buisnessImpact)
+        {
+            case 1:
+            technologiesLow.push(technologies[i]);
+            break;
+            case 2:
+            technologiesMid.push(technologies[i]);
+            break;
+            case 3:
+            technologiesHigh.push(technologies[i]);
+            break;
+            case 4:
+            technologiesTrans.push(technologies[i]);
+            break;
+            default:
+            break;
+        }
+      }
+    }
+    function drawButtons(technologies, degree, radarWidth){
+      var i;
+      for(i=0;i<technologies.length;i++)
+      {
+        coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
+        coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
+
+        $testButton = $('<button/>').attr({
+          class: technologies[i].technologyType,
+          style: 'left:' + (coordinateX + (radarWidth/2)+10) + 'px;top:' + (coordinateY + (radarWidth/2)+20) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      degree=degree+5;
+      }
+    }
+
+
+//Codigo viejo
     var i;
     var $testButton;
     var degree=5;
@@ -250,7 +293,7 @@
       degree=degree+5;
     }
     //Estos son lineas de prueba
-    degree = 5;
+    degree = 5;|
     radarWidth = document.getElementById('radar-container').offsetWidth;
     radarWidth = radarWidth - 110;
     for(i=0; i<35; i++)
