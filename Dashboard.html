@@ -5,8 +5,37 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+    <!--<script type="text/javascript" src="js/app.js"></script>-->
     <style>
+      #abc{
+        width: 100%;
+        height: 100%;
+        opacity: 0.95;
+        top: 0;
+        left: 0;
+        z-index: +1;
+        display: none;
+        position: fixed;
+        background-color: #313131;
+        overflow:auto;
+      }
+      div#popupContact{
+        position: absolute;
+        left: 50%;
+        top: 17%;
+        margin-left: -202px;
+      }
+      #form{
+        max-width: 450px;
+        min-width: 350px;
+        padding: 10px 50px;
+        border: 2px solid gray;
+        border-radius: 10px;
+        background-color: white;
+      }
+      #form div{
+        padding: 10px;
+      }
       tr [colspan="2"] {
         text-align: center;
       }
@@ -135,10 +164,60 @@
           <a class="navbar-brand" href="#">Softtek Innovation Dashboard</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><i class="fa fa-plus" aria-hi-dden="true"></i> Add Technology</a></li>
+          <li><a onclick="div_show()"><i class="fa fa-plus" aria-hi-dden="true"></i> Add Technology</a></li>
         </ul>
       </div>
     </nav>
+    <div id="abc" style="display: none;">
+
+	 <!-- Popup div starts here -->
+   <div id="popupContact">
+
+	    <!-- contact us form -->
+		<form action="#" method="post" id="form">
+			   <!--<img src="images/3.png" id="close" onclick="div_hide()">-->
+			   <h2>Add Technology</h2><hr>
+         <div>
+			        <label>Technology Name: <input type="text" name="name" id="name" placeholder="Name"></label>
+         </div>
+         <div>
+           <label>Buisness Impact:<br>
+             <input type="radio" name="buisnessImpact" value="1" checked> Low
+             <input type="radio" name="buisnessImpact" value="2"> Medium
+             <input type="radio" name="buisnessImpact" value="3"> High
+             <input type="radio" name="buisnessImpact" value="4" checked> Transitional
+           </label>
+         </div>
+         <div>
+           <label>Technology Type:<br>
+             <input type="radio" name="technologyType" value="mainstream" checked> Mainstream
+             <input type="radio" name="technologyType" value="improve"> Improve
+             <input type="radio" name="technologyType" value="generate"> Generate
+             <input type="radio" name="technologyType" value="disrupt" checked> Disrupt
+           </label>
+         </div>
+         <div>
+           <label>Impact Time:<br>
+             <select>
+               <option value="0">Now</option>
+               <option value="1">1 years</option>
+               <option value="2">2 years</option>
+               <option value="3">3 years</option>
+               <option value="4">4 years</option>
+             </select>
+           </label>
+         </div>
+         <div>
+           <label>Author:
+             <input type="text" name="authorName" placeholder="John Doe">
+           </label>
+         </div>
+         <div>
+           <button onclick="javascript: check_empty()">Submit</button>
+         </div>
+		  </form>
+    </div>
+    </div>
     <div class="row">
       <div class="col-lg-3 col-md-3 col-sm-3">
         <img id="softtekImage" src="assets/images/softtek.png">
@@ -215,79 +294,264 @@
       </svg>
     </div>
     <script>
-    var radarWidth = document.getElementById('radar-container').offsetWidth;
-    var coordinateX;
-    var coordinateY;
-    var degree;
     var technologies = [
-      {technologyName: "AngularJS", buisnessImpact: "1", timeImpact: "3", technologyType: "generate", author: "Fausto Murillo"},
-      {technologyName: "EmberJS", buisnessImpact: "2", timeImpact: "0", technologyType: "improve", author: "Carlos Murillo"},
-      {technologyName: "BackboneJS", buisnessImpact: "4", timeImpact: "2", technologyType: "mainstream", author: "Carlos Murillo"},
-      {technologyName: "Bootstrap", buisnessImpact: "1", timeImpact: "4", technologyType: "improve", author: "Carlos Murillo"},
-      {technologyName: "Foundation", buisnessImpact: "2", timeImpact: "0", technologyType: "disrupt", author: "Carlos Murillo"}
+      {technologyName: "AngularJS", buisnessImpact: 1, timeImpact: 3, technologyType: "generate", author: "Fausto Murillo"},
+      {technologyName: "EmberJS", buisnessImpact: 2, timeImpact: 0, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "BackboneJS", buisnessImpact: 4, timeImpact: 2, technologyType: "mainstream", author: "Carlos Murillo"},
+      {technologyName: "BackboneJS", buisnessImpact: 4, timeImpact: 3, technologyType: "mainstream", author: "Carlos Murillo"},
+      {technologyName: "JQuery", buisnessImpact: 1, timeImpact: 3, technologyType: "improve", author: "Rodolfo Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 0, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "ZURB", buisnessImpact: 1, timeImpact: 3, technologyType: "mainstream", author: "Gerardo Murillo"},
+      {technologyName: "Foundation", buisnessImpact: 2, timeImpact: 0, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 0, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "ZURB", buisnessImpact: 1, timeImpact: 3, technologyType: "generate", author: "Gerardo Murillo"},
+      {technologyName: "Foundation", buisnessImpact: 2, timeImpact: 0, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "JQuery", buisnessImpact: 3, timeImpact: 4, technologyType: "improve", author: "Rodolfo Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 4, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "ZURB", buisnessImpact: 1, timeImpact: 3, technologyType: "disrupt", author: "Gerardo Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 2, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "JQuery", buisnessImpact: 3, timeImpact: 4, technologyType: "improve", author: "Rodolfo Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 4, technologyType: "mainstream", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 4, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 4, technologyType: "generate", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 4, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 1, timeImpact: 4, technologyType: "generate", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 2, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 2, timeImpact: 4, technologyType: "mainstream", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 2, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 2, timeImpact: 4, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 2, timeImpact: 4, technologyType: "generate", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 2, timeImpact: 4, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 2, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 2, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 2, timeImpact: 4, technologyType: "generate", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 2, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 4, technologyType: "mainstream", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 4, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 4, technologyType: "generate", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 4, technologyType: "improve", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 4, technologyType: "generate", author: "Carlos Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 4, technologyType: "disrupt", author: "Carlos Murillo"},
+      {technologyName: "ZURB", buisnessImpact: 1, timeImpact: 3, technologyType: "disrupt", author: "Gerardo Murillo"},
+      {technologyName: "Bootstrap", buisnessImpact: 3, timeImpact: 2, technologyType: "mainstream", author: "Carlos Murillo"},
+      {technologyName: "ZURB", buisnessImpact: 1, timeImpact: 3, technologyType: "improve", author: "Gerardo Murillo"}
     ];
+    var technologiesLow0 = [];
+    var technologiesLow1 = [];
+    var technologiesLow2 = [];
+    var technologiesLow3 = [];
+    var technologiesLow4 = [];
+    var technologiesMid0 = [];
+    var technologiesMid1 = [];
+    var technologiesMid2 = [];
+    var technologiesMid3 = [];
+    var technologiesMid4 = [];
+    var technologiesHigh0 = [];
+    var technologiesHigh1 = [];
+    var technologiesHigh2 = [];
+    var technologiesHigh3 = [];
+    var technologiesHigh4 = [];
+    var technologiesTrans0 = [];
+    var technologiesTrans1 = [];
+    var technologiesTrans2 = [];
+    var technologiesTrans3 = [];
+    var technologiesTrans4 = [];
+
+    organizeTechnologies(technologies);
+    drawTechnologies();
 
 
-    var technologiesLow = [];
-    var technologiesMid = [];
-    var technologiesHigh = [];
-    var technologiesTrans = [];
-    /*technologies.sort(function(a,b){
-     return a.buisnessImpact - b.buisnessImpact;
-   });*/
-    console.log(technologies);
-    function organizeTechnologiesImpact(technologies){
+    function drawButtons(technologies, degree, add, reductionWidth, left, top, max, reductionWidth2, left2, top2){
+      var i;
+      var radarWidth = document.getElementById('radar-container').offsetWidth;
+      var coordinateX;
+      var coordinateY;
+      var newRadarWidth = radarWidth - reductionWidth;
+      for(i=0;i<technologies.length;i++)
+      {
+        if(i==max)degree=5;
+        if(i>=max){newRadarWidth = radarWidth - reductionWidth2;left=left2;top=top2;}
+        coordinateX = (newRadarWidth/-2)*Math.cos(degree * Math.PI/180);
+        coordinateY = (newRadarWidth/-2)*Math.sin(degree * Math.PI/180);
+
+        $testButton = $('<button/>').attr({
+          class: technologies[i].technologyType,
+          style: 'left:' + (coordinateX + (newRadarWidth/2)+left) + 'px;top:' + (coordinateY + (newRadarWidth/2)+top) + 'px;position: absolute;'
+        });
+        $('#radar-container').append($testButton);
+      degree=degree+add;
+      }
+    }
+
+
+    function drawTechnologies(technologies){
+      //(technolgy, startingDegree, degreeAdded, radarWidth, marginLeft, marginTop, max, marginLeft2, marginTop2)
+      drawButtons(technologiesLow0, 10, 10, 820, 400, 400);
+      drawButtons(technologiesMid0, 55, 10, 820, 400, 400);
+      drawButtons(technologiesHigh0, 100, 10, 820, 400, 400);
+      drawButtons(technologiesTrans0, 145, 10, 820, 400, 400);
+      drawButtons(technologiesLow1, 6, 8.2, 640, 310, 310);
+      drawButtons(technologiesMid1, 51, 8.2, 640, 310, 310);
+      drawButtons(technologiesHigh1, 96, 8.2, 640, 310, 310);
+      drawButtons(technologiesTrans1, 141, 8.2, 640, 310, 310);
+      drawButtons(technologiesLow2, 5, 5, 440, 210, 210);
+      drawButtons(technologiesMid2, 50, 5, 440, 210, 210);
+      drawButtons(technologiesHigh2, 95, 5, 440, 210, 210);
+      drawButtons(technologiesTrans2, 140, 5, 440, 210, 210);
+      drawButtons(technologiesLow3, 5, 5, 240, 110, 120);
+      drawButtons(technologiesMid3, 50, 5, 240, 110, 120);
+      drawButtons(technologiesHigh3, 95, 5, 240, 110, 120);
+      drawButtons(technologiesTrans3, 140, 5, 240, 110, 120);
+      drawButtons(technologiesLow4, 5, 5, 40, 10, 20, 8, 110, 45, 55);
+      drawButtons(technologiesMid4, 50, 5, 40, 10, 20, 8, 110, 45, 55);
+      drawButtons(technologiesHigh4, 95, 5, 40, 10, 20, 8, 110, 45, 55);
+      drawButtons(technologiesTrans4, 140, 5, 40, 10, 20, 8, 110, 45, 55);
+    }
+
+
+    function organizeTechnologies(technologies){
       var i;
       for(i=0;i<technologies.length;i++)
       {
         switch(technologies[i].buisnessImpact)
         {
             case 1:
-            technologiesLow.push(technologies[i]);
+            switch(technologies[i].timeImpact)
+            {
+              case 0:
+              technologiesLow0.push(technologies[i]);
+              break;
+              case 1:
+              technologiesLow1.push(technologies[i]);
+              break;
+              case 2:
+              technologiesLow2.push(technologies[i]);
+              break;
+              case 3:
+              technologiesLow3.push(technologies[i]);
+              break;
+              case 4:
+              technologiesLow4.push(technologies[i]);
+              break;
+              default:
+              break;
+            }
             break;
             case 2:
-            technologiesMid.push(technologies[i]);
+            switch(technologies[i].timeImpact)
+            {
+              case 0:
+              technologiesMid0.push(technologies[i]);
+              break;
+              case 1:
+              technologiesMid1.push(technologies[i]);
+              break;
+              case 2:
+              technologiesMid2.push(technologies[i]);
+              break;
+              case 3:
+              technologiesMid3.push(technologies[i]);
+              break;
+              case 4:
+              technologiesMid4.push(technologies[i]);
+              break;
+              default:
+              break;
+            }
             break;
             case 3:
-            technologiesHigh.push(technologies[i]);
+            switch(technologies[i].timeImpact)
+            {
+              case 0:
+              technologiesHigh0.push(technologies[i]);
+              break;
+              case 1:
+              technologiesHigh1.push(technologies[i]);
+              break;
+              case 2:
+              technologiesHigh2.push(technologies[i]);
+              break;
+              case 3:
+              technologiesHigh3.push(technologies[i]);
+              break;
+              case 4:
+              technologiesHigh4.push(technologies[i]);
+              break;
+              default:
+              break;
+            }
             break;
             case 4:
-            technologiesTrans.push(technologies[i]);
+            switch(technologies[i].timeImpact)
+            {
+              case 0:
+              technologiesTrans0.push(technologies[i]);
+              break;
+              case 1:
+              technologiesTrans1.push(technologies[i]);
+              break;
+              case 2:
+              technologiesTrans2.push(technologies[i]);
+              break;
+              case 3:
+              technologiesTrans3.push(technologies[i]);
+              break;
+              case 4:
+              technologiesTrans4.push(technologies[i]);
+              break;
+              default:
+              break;
+            }
             break;
             default:
             break;
         }
       }
     }
-    function drawButtons(technologies,  degree, radarWidth){
-      var i;
 
-      for(i=0;i<technologies.length;i++)
-      {
-        coordinateX = (radarWidth/-2)*Math.cos(degree * Math.PI/180);
-        coordinateY = (radarWidth/-2)*Math.sin(degree * Math.PI/180);
-
-        $testButton = $('<button/>').attr({
-          class: technologies[i].technologyType,
-          style: 'left:' + (coordinateX + (radarWidth/2)+10) + 'px;top:' + (coordinateY + (radarWidth/2)+20) + 'px;position: absolute;'
-        });
-        $('#radar-container').append($testButton);
-      degree=degree+5;
-      }
+    function printOverviewData(technology){
+      $(document).on("click", "#testButton", function() {
+        alert('technology.technologyName');
+      });
     }
-    function setDrawingParameters(technologies){
-      var i;
-      for(i=0;i<technologies.length;i++)
-      {
-        switch(technologies[i].timeImpact)
-        {
 
-        }
+    function check_empty(){
+      if(document.getElementById('name').value == ""
+      || document.getElementById('buisnessImpact').value == ""
+      ||document.getElementById('timeImpact').value == ""
+      ||document.getElementById('author').value == "" ){
+        alert ("Fill All Fields !");
       }
-    }
+       else {
+          document.getElementById('form').submit();
+           alert ("Form submitted successfully...");
+       }
+      }
+
+      //function to display Popup
+      function div_show(){
+        document.getElementById('abc').style.display = "block";
+      }
+
+      //function to hide Popup
+      function div_hide(){
+        document.getElementById('abc').style.display = "none";
+      }
+      function add_technology(){
+        document.getElementById('abc').style.display = "none";
+      }
+
 
 
 //Codigo viejo
+/*
     var i;
     var $testButton;
     var degree=5;
@@ -441,7 +705,10 @@
         });
         $('#radar-container').append($testButton);
       degree=degree+10;
-    }
+    }*/
+    /*technologies.sort(function(a,b){
+     return a.buisnessImpact - b.buisnessImpact;
+   });*/
     </script>
   </body>
 </html>
